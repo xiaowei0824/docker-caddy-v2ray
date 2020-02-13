@@ -1,0 +1,8 @@
+$YOUR_DOMAIN
+{
+  log /var/log/caddy/caddy.log
+  proxy /$YOUR_PATH v2ray:$YOU_PORT {
+    websocket
+    header_upstream -Origin
+  }
+}

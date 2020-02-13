@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  v2ray:
+    image: v2ray/official
+    container_name: v2ray
+    volumes:
+    - ./config.json:/etc/v2ray/config.json
+    - ./v2ray-log:/var/log/v2ray
+    expose:
+    - "$YOUR_PORT"
+
+  caddy:
+    image: abiosoft/caddy
+    container_name: caddy
+    depends_on: 
+    - v2ray
+    volumes:
+    - ./Caddyfile:/etc/Caddyfile
+    - ./caddyCertificates:/root/.caddy
+    - ./caddy-log:/var/log/caddy
+    environment:
+    - ACME_AGREE=true
+    ports:
+    - "80:80"
+    - "443:443"
